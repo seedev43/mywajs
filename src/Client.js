@@ -86,34 +86,7 @@ class Client extends EventEmitter {
   /**
    * Sets up events and requirements, kicks off authentication request
    */
-
-  async isPlaywrightInstalled() {
-    try {
-      await playwright.chromium.version();
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  async downloadPlaywright() {
-    console.log("Mengunduh Playwright...");
-<<<<<<< HEAD
-    await playwright.chromium.download();
-=======
-    await playwright.chromium.__experimental.downloadBrowserWithProgressBar(
-      "chromium"
-    );
->>>>>>> main
-    console.log("Playwright berhasil diunduh.");
-  }
-
   async initialize() {
-    if (await this.isPlaywrightInstalled()) {
-      console.log("Playwright sudah terinstal.");
-    } else {
-      await this.downloadPlaywright();
-    }
     let [browser, context, page] = [null, null];
 
     await this.authStrategy.beforeBrowserInitialized();
