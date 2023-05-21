@@ -56,6 +56,7 @@ try {
   playwright = require("playwright");
 } catch (error) {
   console.error("playwright belum terinstall");
+  process.exit(1);
 }
 class Client extends EventEmitter {
   constructor(options = {}) {
