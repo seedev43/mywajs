@@ -98,7 +98,13 @@ class Client extends EventEmitter {
 
   async downloadPlaywright() {
     console.log("Mengunduh Playwright...");
+<<<<<<< HEAD
     await playwright.chromium.download();
+=======
+    await playwright.chromium.__experimental.downloadBrowserWithProgressBar(
+      "chromium"
+    );
+>>>>>>> main
     console.log("Playwright berhasil diunduh.");
   }
 
