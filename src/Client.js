@@ -10,7 +10,7 @@ wa: 62851574894460
 tq to: pedro & edgard & dika
 */
 import EventEmitter from "events";
-// import playwright from "playwright";
+import playwright from "playwright";
 import moduleRaid from "@pedroslopez/moduleraid/moduleraid.js";
 import { createRequire } from "module";
 
@@ -48,16 +48,8 @@ import Fs from "fs";
 import { promises as fs } from "fs";
 import { exec } from "child_process";
 
-let playwright;
-
 const require = createRequire(import.meta.url);
 
-try {
-  playwright = require("playwright");
-} catch (error) {
-  console.error("playwright belum terinstall");
-  process.exit(1);
-}
 class Client extends EventEmitter {
   constructor(options = {}) {
     super();
@@ -94,7 +86,28 @@ class Client extends EventEmitter {
   /**
    * Sets up events and requirements, kicks off authentication request
    */
+
+  async isPlaywrightInstalled() {
+    try {
+      await playwright.chromium.version();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async downloadPlaywright() {
+    console.log("Mengunduh Playwright...");
+    await playwright.chromium.download();
+    console.log("Playwright berhasil diunduh.");
+  }
+
   async initialize() {
+    if (await this.isPlaywrightInstalled()) {
+      console.log("Playwright sudah terinstal.");
+    } else {
+      await this.downloadPlaywright();
+    }
     let [browser, context, page] = [null, null];
 
     await this.authStrategy.beforeBrowserInitialized();
